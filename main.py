@@ -24,6 +24,9 @@ GRAVITY = -900
 
 
 class App(arcade.Window):
+    SLING_X = 200  # Posición X fija de la resortera
+    SLING_Y = 200  # Posición Y fija de la resortera
+
     def __init__(self):
         super().__init__(WIDTH, HEIGHT, TITLE)
         self.background_list = arcade.SpriteList()
@@ -33,6 +36,14 @@ class App(arcade.Window):
         background.width = WIDTH
         background.height = HEIGHT
         self.background_list.append(background)
+
+        # Resortera (sling) en un SpriteList
+        self.sling_list = arcade.SpriteList()
+        self.sling_sprite = arcade.Sprite("assets/img/sling-3.png", scale=0.5)
+        self.sling_sprite.center_x = self.SLING_X
+        self.sling_sprite.center_y = self.SLING_Y
+        self.sling_list.append(self.sling_sprite)
+
         # crear espacio de pymunk
         self.space = pymunk.Space()
         self.space.gravity = (0, GRAVITY)
@@ -52,8 +63,9 @@ class App(arcade.Window):
         self.current_level = 0
         self.load_level(self.current_level)
 
-        self.start_point = Point2D()
-        self.end_point = Point2D()
+        # El punto de inicio de lanzamiento es la resortera
+        self.start_point = Point2D(self.SLING_X, self.SLING_Y)
+        self.end_point = Point2D(self.SLING_X, self.SLING_Y)
         self.distance = 0
         self.draw_line = False
 
@@ -119,35 +131,39 @@ class App(arcade.Window):
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == arcade.MOUSE_BUTTON_LEFT:
-            self.start_point = Point2D(x, y)
-            self.end_point = Point2D(x, y)
-            self.draw_line = True
-            logger.debug(f"Start Point: {self.start_point}")
+            # Solo permite iniciar el disparo si el mouse está cerca de la resortera
+            if get_distance(Point2D(x, y), Point2D(self.SLING_X, self.SLING_Y)) < 60:
+                self.start_point = Point2D(self.SLING_X, self.SLING_Y)
+                self.end_point = Point2D(x, y)
+                self.draw_line = True
+                logger.debug(f"Start Point: {self.start_point}")
 
     def on_mouse_drag(
         self, x: int, y: int, dx: int, dy: int, buttons: int, modifiers: int
     ):
-        if buttons == arcade.MOUSE_BUTTON_LEFT:
+        if buttons == arcade.MOUSE_BUTTON_LEFT and self.draw_line:
             self.end_point = Point2D(x, y)
             logger.debug(f"Dragging to: {self.end_point}")
 
     def on_mouse_release(self, x: int, y: int, button: int, modifiers: int):
-        if button == arcade.MOUSE_BUTTON_LEFT:
+        if button == arcade.MOUSE_BUTTON_LEFT and self.draw_line:
             logger.debug(f"Releasing from: {self.end_point}")
             self.draw_line = False
             impulse_vector = get_impulse_vector(self.start_point, self.end_point)
 
+            # El pájaro siempre sale desde la resortera
+            bird_x, bird_y = self.SLING_X, self.SLING_Y
             if self.current_bird_type == Bird:
                 bird = Bird(
-                    "assets/img/red-bird3.png", 1, impulse_vector, x, y, self.space
+                    "assets/img/red-bird3.png", 1, impulse_vector, bird_x, bird_y, self.space
                 )
             elif self.current_bird_type == BlueBird:
                 bird = BlueBird(
-                    "assets/img/blue.png", 0.2, impulse_vector, x, y, self.space
+                    "assets/img/blue.png", 0.2, impulse_vector, bird_x, bird_y, self.space
                 )
             elif self.current_bird_type == YellowBird:
                 bird = YellowBird(
-                    "assets/img/yellowBird.png", 0.05, impulse_vector, x, y, self.space
+                    "assets/img/yellowBird.png", 0.05, impulse_vector, bird_x, bird_y, self.space
                 )
 
             self.sprites.append(bird)
@@ -178,11 +194,14 @@ class App(arcade.Window):
     def on_draw(self):
         self.clear()
         self.background_list.draw()
+        # Dibuja la resortera primero
+        self.sling_list.draw()
         self.sprites.draw()
         if self.draw_line:
+            # Línea de lanzamiento desde la resortera
             arcade.draw_line(
-                self.start_point.x,
-                self.start_point.y,
+                self.SLING_X,
+                self.SLING_Y,
                 self.end_point.x,
                 self.end_point.y,
                 arcade.color.BLACK,

@@ -38,12 +38,14 @@ class BlueBird(Bird):
             collision_layer,
         )
         self.is_divided = False
+        self.power_used = False
 
     def update(self, delta_time: float = 1/60):
         super().update(delta_time)
-        if self.is_divided:
+        if self.is_divided and not self.power_used:
             self.divide(self.space, self.sprites, self.birds)
             self.is_divided = False
+            self.power_used = True
 
     def divide(self, space, sprites, birds):
         angles = [-30, 30]
@@ -68,7 +70,7 @@ class BlueBird(Bird):
                 space.add(divided_bird.shape, divided_bird.shape.body)
 
     def power_up(self, space, sprites, birds):
-        if not self.is_divided:
+        if not self.is_divided and not self.power_used:
             self.space = space
             self.sprites = sprites
             self.birds = birds

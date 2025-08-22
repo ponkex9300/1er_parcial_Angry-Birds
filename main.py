@@ -83,6 +83,11 @@ class App(arcade.Window):
         for sprite in self.world:
             self.space.remove(sprite.shape, sprite.body)
         self.world.clear()
+        # Eliminar pájaros restantes de la física y de la pantalla
+        for bird in self.birds:
+            if hasattr(bird, 'shape') and hasattr(bird, 'body') and bird.shape.space is not None:
+                self.space.remove(bird.shape, bird.body)
+            bird.remove_from_sprite_lists()
         self.birds.clear()
         self.sprites.clear()
 

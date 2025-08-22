@@ -52,11 +52,20 @@ class Bird(arcade.Sprite):
     def update(self, delta_time: float = 1 / 60):
         """
         Update the position of the bird sprite based on the physics body position
+        Elimina el objeto si sale de la pantalla.
         """
         self.center_x = self.shape.body.position.x
         self.center_y = self.shape.body.position.y
         self.radians = self.shape.body.angle
         self.timer += delta_time
+        # Eliminar si sale de la pantalla
+        if (
+            self.center_x < -200 or self.center_x > 2000 or
+            self.center_y < -200 or self.center_y > 1200
+        ):
+            if hasattr(self, 'shape') and hasattr(self, 'body') and self.shape.space is not None:
+                self.shape.space.remove(self.shape, self.body)
+            self.remove_from_sprite_lists()
 
 
 class Pig(arcade.Sprite):
@@ -86,6 +95,14 @@ class Pig(arcade.Sprite):
         self.center_x = self.shape.body.position.x
         self.center_y = self.shape.body.position.y
         self.radians = self.shape.body.angle
+        # Eliminar si sale de la pantalla
+        if (
+            self.center_x < -200 or self.center_x > 2000 or
+            self.center_y < -200 or self.center_y > 1200
+        ):
+            if hasattr(self, 'shape') and hasattr(self, 'body') and self.shape.space is not None:
+                self.shape.space.remove(self.shape, self.body)
+            self.remove_from_sprite_lists()
 
 
 class PassiveObject(arcade.Sprite):
@@ -121,6 +138,14 @@ class PassiveObject(arcade.Sprite):
         self.center_x = self.shape.body.position.x
         self.center_y = self.shape.body.position.y
         self.radians = self.shape.body.angle
+        # Eliminar si sale de la pantalla
+        if (
+            self.center_x < -200 or self.center_x > 2000 or
+            self.center_y < -200 or self.center_y > 1200
+        ):
+            if hasattr(self, 'shape') and hasattr(self, 'body') and self.shape.space is not None:
+                self.shape.space.remove(self.shape, self.body)
+            self.remove_from_sprite_lists()
 
     def power_up(self):
         pass

@@ -38,10 +38,11 @@ class YellowBird(Bird):
         )
         self.boost_multiplier = boost_multiplier
         self.is_boosted = False
+        self.power_used = False
 
     def update(self, delta_time: float = 1/60):
         super().update(delta_time)
-        if self.is_boosted:
+        if self.is_boosted and not self.power_used:
             impulse_vector = get_impulse_vector(
                 Point2D(0, 0),
                 Point2D(self.center_x, self.center_y),
@@ -51,7 +52,9 @@ class YellowBird(Bird):
                 impulse_vector.impulse
                 * pymunk.Vec2d(1, 0).rotated(impulse_vector.angle)
             )
+            self.power_used = True
 
     def power_up(self):
-        self.is_boosted = True
-        self.update()
+        if not self.is_boosted and not self.power_used:
+            self.is_boosted = True
+            self.update()

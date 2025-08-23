@@ -176,25 +176,25 @@ class App(arcade.Window):
             self.birds.append(bird)
 
     def on_key_press(self, key, modifiers):
-        if key == arcade.key.TAB:
-            self.switch_bird()
+        # Cambiar pájaro según la tecla presionada
+        if key == arcade.key.B:
+            self.current_bird_index = 1
+            self.current_bird_type = self.bird_types[self.current_bird_index]
+            print("Cambiado a pájaro azul")
+        elif key == arcade.key.Y:
+            self.current_bird_index = 2
+            self.current_bird_type = self.bird_types[self.current_bird_index]
+            print("Cambiado a pájaro amarillo")
+        elif key == arcade.key.R:
+            self.current_bird_index = 0
+            self.current_bird_type = self.bird_types[self.current_bird_index]
+            print("Cambiado a pájaro rojo")
         elif key == arcade.key.SPACE and hasattr(self, 'current_bird'):
             print(f"tipo de mi pajaro {type(self.current_bird)}")
             if isinstance(self.current_bird, BlueBird):
                 self.current_bird.power_up(self.space, self.sprites, self.birds)
             elif hasattr(self.current_bird, 'power_up'):
                 self.current_bird.power_up()
-        elif key == arcade.key.LEFT:
-            print("xd")
-            self.current_level += 1
-            self.load_level(self.current_level)
-
-    def switch_bird(self):
-        self.current_bird_index = (self.current_bird_index + 1) % len(self.bird_types)
-        self.current_bird_type = self.bird_types[self.current_bird_index]
-        print(
-            f"Switched to {self.current_bird_type.__name__} with index {self.current_bird_index}"
-        )
 
     def on_draw(self):
         self.clear()

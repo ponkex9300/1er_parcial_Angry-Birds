@@ -8,13 +8,38 @@ Este proyecto implementa la funcionalidad base del videojuego Angry Birds. El pr
 
 ## Instrucciones
 
-Para ejecutar el programa de arcade:
 
-1. Clone (o forkee) el repositorio en un directorio local.
-2. Abra la carpeta completa con Visual Studio code.
-3. Ejecute el archivo main.py.
+### Cómo ejecutar el proyecto
 
-Siga las instrucciones para la implementación de la evaluación.
+1. **Clona o descarga el repositorio** en tu computadora.
+2. **Abre la carpeta** del proyecto con Visual Studio Code.
+3. **Abre una terminal** en VS Code (o en la carpeta del proyecto).
+4. **Crea y activa un entorno virtual de Python** (recomendado):
+	- En Windows:
+	  ```powershell
+	  python -m venv .venv
+	  .venv\Scripts\activate
+	  ```
+	- En Mac/Linux:
+	  ```bash
+	  python3 -m venv .venv
+	  source .venv/bin/activate
+	  ```
+5. **Instala las dependencias necesarias** ejecutando:
+	```bash
+	pip install arcade pymunk numpy
+	```
+6. **Ejecuta el juego** con el siguiente comando:
+	```bash
+	python main.py
+	```
+	Si usas entorno virtual y Windows, también puedes usar:
+	```powershell
+	.venv\Scripts\python.exe main.py
+	```
+
+¡Listo! El juego se abrirá en una ventana nueva. Si tienes problemas con dependencias, asegúrate de estar usando el entorno virtual y de haber instalado los paquetes correctamente.
+
 
 ### Implementación de mecánicas faltantes
 

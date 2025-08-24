@@ -1,5 +1,8 @@
 # Infografia - Universidad Privada Boliviana 1er parcial A
 
+### Adrian Coello - 77258
+### Sebastian Nuñez - 77325
+
 ## Descripción
 
 Este repositorio contiene el código base para el proyecto de tipo A.
@@ -38,7 +41,7 @@ Este proyecto implementa la funcionalidad base del videojuego Angry Birds. El pr
 	.venv\Scripts\python.exe main.py
 	```
 
-¡Listo! El juego se abrirá en una ventana nueva. Si tienes problemas con dependencias, asegúrate de estar usando el entorno virtual y de haber instalado los paquetes correctamente.
+El juego se abrirá en una ventana nueva. Si tienes problemas con dependencias, asegúrate de estar usando el entorno virtual y de haber instalado los paquetes correctamente.
 
 
 ### Implementación de mecánicas faltantes
@@ -57,23 +60,8 @@ Una vez completada la implementación de la mecánica principal, usted deberá i
 
 #### Yellow bird
 
-Si el usuario hace clic izquierdo mientras el Yellow Bird está en vuelo, el mismo incrementará su impulso en la dirección en la que está apuntando por un multiplicador aplicado al impulso inicial. El multiplicador estará definido como un argumento al método de inicialización y deberá tener un valor de 2 por defecto.
+Si el usuario hace clic en espacio mientras el Yellow Bird está en vuelo, el mismo incrementará su impulso en la dirección en la que está apuntando por un multiplicador aplicado al impulso inicial. El multiplicador estará definido como un argumento al método de inicialización y deberá tener un valor de 2 por defecto.
 
 #### Blue bird
 
-Si el usuario hace clic izquierdo mientras el blue bird está en vuelo, éste se convertirá en 3 blue birds instantáneamente, cada uno con una separación de dirección de 30 grados. Por ejemplo, si en el momento del clic el blue bird tiene una dirección de -10 grados, los 3 blue birds resultantes deberán tener direcciones de 20, -10 y -40 grados respectivamente. La velocidad deberá mantenerse para los 3 pájaros.
-
-#### (Extra) Implementación de niveles
-
-La lógica de lanzamiento y destrucción de objetos está implementada en el código base. Como un extra, usted podrá implementar la lógica de gestión de niveles en base a un puntaje mínimo a alcanzar.
-
-### Envío del código
-
-Usted deberá enviar un enlace a un repositorio de github que solamente contendrá el código del proyecto en cuestión. Se recomienda que, para salvar inconvenientes con GIT, usted realice un fork de este repositorio en su propia cuenta, y luego clone el fork a su directorio local. 
-
-Una vez finalizadas las tareas, se deberá enviar un email por grupo con los siguientes datos:
-
- - Destinatario: eduardo.laruta+tareas@gmail.com
- - Asunto: 1era Evaluacion parcial Infografia
- - Contenido: Nombres y códigos de los integrantes y el enlace al repositorio de GitHub
-
+Si el usuario hace clic en espacio mientras el blue bird está en vuelo, éste se convertirá en 3 blue birds instantáneamente, cada uno con una separación de dirección de 30 grados. Por ejemplo, si en el momento del clic el blue bird tiene una dirección de -10 grados, los 3 blue birds resultantes deberán tener direcciones de 20, -10 y -40 grados respectivamente. La velocidad deberá mantenerse para los 3 pájaros.
